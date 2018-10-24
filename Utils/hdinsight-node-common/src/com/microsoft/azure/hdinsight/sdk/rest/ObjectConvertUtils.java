@@ -23,6 +23,7 @@ package com.microsoft.azure.hdinsight.sdk.rest;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -43,6 +44,7 @@ public final class ObjectConvertUtils {
     private static XmlMapper xmlMapper = new XmlMapper();
 
     public static  <T> Optional<T> convertJsonToObject(@NotNull String jsonString, @NotNull Class<T> tClass) throws IOException {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return Optional.ofNullable(objectMapper.readValue(jsonString, tClass));
     }
 
